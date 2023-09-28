@@ -2,7 +2,7 @@ package = "kong-jwt2header"
 version = "1.0-3"
 
 source = {
-  url = "https://github.com/yesinteractive/kong-jwt2header.git"
+  url = "file://kong-jwt2header-1.0-3.rockspec"
 }
 
 description = {
@@ -11,7 +11,7 @@ description = {
 }
 
 dependencies = {
-  "lua ~> 5.1"
+  "lua ~> 5.4"
 }
 
 build = {
