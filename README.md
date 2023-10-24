@@ -21,11 +21,15 @@ If you are using Docker, a helpful script is included to help deploy the plugin 
 
 ### luarocks
 
+<pre>
+luarocks make --pack-binary-rock
+</pre>
 Verify Git is installed on your Kong Node then install via luarocks:
 
 <pre>
 $ apk add --no-cache git
 $ luarocks install kong-jwt2header
+
 </pre>
 
 Once installed, besure to include `kong-jwt2header` in your KONG_PLUGINS environment variable and reload Kong. 

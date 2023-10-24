@@ -56,13 +56,14 @@ function JWT2Header:access(conf)
             end
             claims = jwt.claims
             header = jwt.header
+            x_jwt_process = true
         end
     end
 
     if x_jwt_process then
         for claim, value in pairs(claims) do
             if type(claim) == "string" and type(value) == "string" then
-                kong.service.request.set_header("X-Kong-JWT-Claim-" .. claim, value)
+                kong.service.request.set_header("X-" .. claim, value)
             end
         end
     end
@@ -79,7 +80,7 @@ function JWT2Header:access(conf)
             for claim, value in pairs(claims) do
                 kong.log.debug("found header " .. claim)
                 if type(claim) == "string" and string.match(claim, 'x%-kong%-jwt%-claim') ~= nil then
-                    --kong.service.request.clear_header(claim)
+                    kong.service.request.clear_header(claim)
                     kong.log.debug("removed header " .. claim)
                 end
             end
@@ -88,10 +89,9 @@ function JWT2Header:access(conf)
 
         --kong.ctx.plugin.claims = nil
     elseif conf.token_required == "true" then
-        kong.service.request.clear_header("X-Kong-JWT-Kong-Proceed")
+        --kong.service.request.clear_header("X-Kong-JWT-Kong-Proceed")
         kong.response.exit(404, '{"error": "No valid JWT token found"}')
-    else
-        kong.service.request.clear_header("X-Kong-JWT-Kong-Proceed")
+        --kong.service.request.clear_header("X-Kong-JWT-Kong-Proceed")
 
     end
 end
