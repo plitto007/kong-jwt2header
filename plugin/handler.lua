@@ -62,7 +62,7 @@ function JWT2Header:access(conf)
 
     if x_jwt_process then
         for claim, value in pairs(claims) do
-            if type(claim) == "string" and type(value) == "string" then
+            if type(claim) == "string" and type(value) == "string" or (lower(claim)=="exp") then
                 kong.service.request.set_header("X-" .. claim, value)
             end
         end
